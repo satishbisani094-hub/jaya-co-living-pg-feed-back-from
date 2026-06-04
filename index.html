@@ -167,7 +167,6 @@
         <p class="success" id="message"></p>
     </div>
 
-    <script>
 <script>
   // 👉 Replace with your Apps‑Script Web‑App URL
   const APP_SCRIPT_URL = "YOUR_APPS_SCRIPT_URL_HERE";
@@ -197,15 +196,32 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
       });
-      document.getElementById("message").innerText = "Thank you for your valuable feedback!";
-      f.reset();
     } catch (err) {
       console.error(err);
-      document.getElementById("message").innerText = "Oops – something went wrong. Please try again later.";
     }
+    // Build mailto URL with feedback data
+    const emailBody = encodeURIComponent(
+      `New feedback from ${data.fullName}:\n` +
+      `Mobile: ${data.mobileNumber}\n` +
+      `Room: ${data.roomNumber}\n` +
+      `Stay: ${data.stayDuration}\n` +
+      `Cleanliness: ${data.cleanliness}\n` +
+      `Food: ${data.foodQuality}\n` +
+      `Wi‑Fi: ${data.wifiQuality}\n` +
+      `Safety: ${data.safety}\n` +
+      `Likes: ${data.likes}\n` +
+      `Suggestions: ${data.suggestions}\n` +
+      `Review: ${data.reviewText}\n` +
+      `Recommend: ${data.recommend}\n` +
+      `Overall rating: ${data.overallRating}`
+    );
+    const mailtoLink = `mailto:msrdy@7gmail.com?subject=New%20Jaya%20Co%20Living%20Feedback&body=${emailBody}`;
+    window.location.href = mailtoLink;
+
+    document.getElementById("message").innerText = "Thank you for your valuable feedback!";
+    f.reset();
   });
 </script>
-    </script>
 
 </body>
 

@@ -79,7 +79,7 @@
 <body>
 
     <div class="container">
-        <h2>PG Feedback Form</h2>
+        <h2>Jaya Co Living PG Feedback Form</h2>
 
         <form id="feedbackForm">
             <label>Full Name</label>
@@ -168,12 +168,43 @@
     </div>
 
     <script>
-        document.getElementById("feedbackForm").addEventListener("submit", function (e) {
-            e.preventDefault();
-            document.getElementById("message").innerText =
-                "Thank you for your feedback!";
-            this.reset();
-        });
+<script>
+  // 👉 Replace with your Apps‑Script Web‑App URL
+  const APP_SCRIPT_URL = "YOUR_APPS_SCRIPT_URL_HERE";
+
+  document.getElementById("feedbackForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const f = e.target;
+    const data = {
+      fullName: f.querySelector('input[type="text"][required]').value,
+      mobileNumber: f.querySelector('input[type="tel"][required]').value,
+      roomNumber: f.querySelectorAll('input[type="text"]')[1].value,
+      stayDuration: f.querySelector('select[required]').value,
+      cleanliness: f.querySelectorAll('select[required]')[1].value,
+      foodQuality: f.querySelectorAll('select[required]')[2].value,
+      wifiQuality: f.querySelectorAll('select[required]')[3].value,
+      safety: f.querySelectorAll('select[required]')[4].value,
+      likes: f.querySelectorAll('textarea')[0].value,
+      suggestions: f.querySelectorAll('textarea')[1].value,
+      reviewText: f.querySelectorAll('textarea')[2].value,
+      recommend: f.querySelectorAll('select[required]')[5].value,
+      overallRating: f.querySelector('input[type="number"][required]').value
+    };
+    try {
+      await fetch(APP_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      document.getElementById("message").innerText = "Thank you for your valuable feedback!";
+      f.reset();
+    } catch (err) {
+      console.error(err);
+      document.getElementById("message").innerText = "Oops – something went wrong. Please try again later.";
+    }
+  });
+</script>
     </script>
 
 </body>
